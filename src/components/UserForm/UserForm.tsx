@@ -14,13 +14,29 @@ const UserForm: FC<Props> = ({ onSubmit }) => {
 
     const onSubmitHandler = (event: FormEvent) => {
         event.preventDefault();
+        onSubmit({
+            id: crypto.randomUUID(),
+            ...user,
+        });
+        setUser({
+            name: "",
+            email: "",
+            isActive: false,
+            role: "",
+        });
     };
     const changeUser = (
         event: ChangeEvent<
             HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
         >
     ) => {
+        const name = event.target.name;
         const value = event.target.value;
+
+        setUser((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
     return (
         <form onSubmit={onSubmitHandler}>
@@ -30,6 +46,7 @@ const UserForm: FC<Props> = ({ onSubmit }) => {
                     className="form-control"
                     id="floatingName"
                     placeholder="Name"
+                    name="name"
                     value={user.name}
                     onChange={changeUser}
                 />
@@ -41,6 +58,7 @@ const UserForm: FC<Props> = ({ onSubmit }) => {
                     className="form-control"
                     id="floatingInput"
                     placeholder="name@example.com"
+                    name="email"
                     value={user.email}
                     onChange={changeUser}
                 />
@@ -49,6 +67,7 @@ const UserForm: FC<Props> = ({ onSubmit }) => {
             <select
                 className="form-select mb-3"
                 aria-label="Default select example"
+                name="role"
                 value={user.role}
                 onChange={changeUser}
             >
