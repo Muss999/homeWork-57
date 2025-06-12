@@ -28,7 +28,7 @@ const App = () => {
         <>
             <main className="container d-flex gap-4 mt-3">
                 <div className="col-6">
-                    <UserForm />
+                    <UserForm onSubmit={addUser} />
                 </div>
                 <div className="col-6">
                     <UserList users={users} />

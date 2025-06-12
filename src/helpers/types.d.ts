@@ -5,3 +5,10 @@ export interface typeUser {
     role: string;
     id: string;
 }
+
+export interface typeUserMutation {
+    name: string;
+    email: string;
+    isActive: boolean;
+    role: string;
+}
