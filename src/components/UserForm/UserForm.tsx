@@ -1,29 +1,31 @@
 import { useState, type ChangeEvent, type FC, type FormEvent } from "react";
-import type { typeUser, typeUserMutation } from "../../helpers/types";
+import type { TypeUser, TypeUserMutation } from "../../helpers/types";
 
 interface Props {
-    onSubmit: (user: typeUser) => void;
+    onSubmit: (user: TypeUser) => void;
 }
+
+const initialUser: TypeUserMutation = {
+    name: "",
+    email: "",
+    isActive: false,
+    role: "",
+};
+
 const UserForm: FC<Props> = ({ onSubmit }) => {
-    const [user, setUser] = useState<typeUserMutation>({
-        name: "",
-        email: "",
-        isActive: false,
-        role: "",
-    });
+    const [user, setUser] = useState<TypeUserMutation>(initialUser);
 
     const onSubmitHandler = (event: FormEvent) => {
         event.preventDefault();
+        if (!user.name || !user.email || !user.role) {
+            alert("Some inputs are empty");
+            return;
+        }
         onSubmit({
             id: crypto.randomUUID(),
             ...user,
         });
-        setUser({
-            name: "",
-            email: "",
-            isActive: false,
-            role: "",
-        });
+        setUser(initialUser);
     };
     const changeUser = (
         event: ChangeEvent<
@@ -32,10 +34,11 @@ const UserForm: FC<Props> = ({ onSubmit }) => {
     ) => {
         const name = event.target.name;
         const value = event.target.value;
+        const checked = (event.target as HTMLInputElement).checked;
 
         setUser((prevState) => ({
             ...prevState,
-            [name]: value,
+            [name]: name === "isActive" ? checked : value,
         }));
     };
     return (
@@ -78,30 +81,18 @@ const UserForm: FC<Props> = ({ onSubmit }) => {
                 <option value="editor">Editor</option>
                 <option value="admin">Admin</option>
             </select>
-            <p>is Active?</p>
-            <div className="d-flex gap-4 mb-3">
-                <div className="form-check">
-                    <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="checkDefault"
-                    />
-                    <label className="form-check-label" htmlFor="checkDefault">
-                        Yes
-                    </label>
-                </div>
-                <div className="form-check">
-                    <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="checkDefault"
-                    />
-                    <label className="form-check-label" htmlFor="checkDefault">
-                        No
-                    </label>
-                </div>
+            <div className="form-check mb-3">
+                <input
+                    className="form-check-input"
+                    type="checkbox"
+                    name="isActive"
+                    checked={user.isActive}
+                    id="checkDefault"
+                    onChange={changeUser}
+                />
+                <label className="form-check-label" htmlFor="checkDefault">
+                    Is active?
+                </label>
             </div>
             <button type="submit" className="btn btn-success">
                 Create

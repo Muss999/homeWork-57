@@ -1,4 +1,4 @@
-export interface typeUser {
+export interface TypeUser {
     name: string;
     email: string;
     isActive: boolean;
@@ -6,7 +6,7 @@ export interface typeUser {
     id: string;
 }
 
-export interface typeUserMutation {
+export interface TypeUserMutation {
     name: string;
     email: string;
     isActive: boolean;

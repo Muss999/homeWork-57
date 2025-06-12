@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import type { typeUser } from "../../helpers/types";
+import type { TypeUser } from "../../helpers/types";
 
 interface Props {
-    user: typeUser;
+    user: TypeUser;
 }
 
 const UserItem: FC<Props> = ({ user }) => {

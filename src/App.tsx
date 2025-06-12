@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./App.css";
 import UserForm from "./components/UserForm/UserForm";
 import UserList from "./components/UserList/UserList";
-import type { typeUser } from "./helpers/types";
+import type { TypeUser } from "./helpers/types";
 
 const App = () => {
-    const [users, setUsers] = useState<typeUser[]>([
+    const [users, setUsers] = useState<TypeUser[]>([
         {
             name: "Tom",
             email: "tom@mail.ru",
@@ -21,7 +21,7 @@ const App = () => {
             id: crypto.randomUUID(),
         },
     ]);
-    const addUser = (user: typeUser) => {
+    const addUser = (user: TypeUser) => {
         setUsers((prevState) => [...prevState, user]);
     };
     return (
